@@ -59,7 +59,7 @@ Table_003_Alliance_12to20 = {
 			[36] = { str = "Fill the Vial in the Moonwell for  As Water Cascades" },
 			[37] = { str = "Accept  WANTED: Murkdeep!  in front of the Inn (lvl 15 quest now)" },
 			[38] = { str = "Turn in  For Love Eternal  on the dock. Watch the love story." },
-			[39] = { str = "You should be 14 by now get skills in Darnassus" },
+			[39] = { str = "You should be 14 by now get skills in Darnassus and be sure to accept the questTrouble In Darkshore from Chief Archaeologist Greywhisker at 23,64" },
 		}
 	},
 
@@ -133,7 +133,7 @@ Table_003_Alliance_12to20 = {
 			[11] = { str = "Go do  A Hunter's Boast  birds in front of the house." },
 			[12] = { str = "Turn in  A Hunter's Boast  accept  A Hunter's Challenge  do it,mobs are around 75,41.", x = 75, y = 41, zone = "Loch Modan" },
 			[13] = { str = "Turn in  A Hunter's Challenge  Accept  Vyrin's Revenge pt.1" },
-			[14] = { str = "Go to 63,47 and accept  Bingles' Missing Supplies ", x = 63, y = 47, zone = "Loch Modan" },
+			[14] = { str = "Go to 63,47 and accept  Bingles' Missing Supplies. Requieries pre-quest Find Bingles from Gnoarn at 69,50 in Ironforge ", x = 63, y = 47, zone = "Loch Modan" },
 			[15] = { str = "Do  Crocolisk Hunting  here on the shore and the island at 54,38", x = 54, y = 38, zone = "Loch Modan" },
 			[16] = { str = "Grab all the parts for  Bingles' Missing Supplies  at (54,27 blastencapper), (48,30 wrench), (51,23 hammer), (48,20 screwdriver) ", x = 54, y = 27, zone = "Loch Modan" },
 			[17] = { str = "Run up to the dam from the west side and accept  A Dark Threat Looms pt.1  at 45,13 then run out the east entrance and turn it in on the barrel guarded by 2 sappers accept  A Dark Threat Looms pt.2 ", x = 45, y = 13, zone = "Loch Modan" },

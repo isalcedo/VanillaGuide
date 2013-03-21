@@ -304,7 +304,9 @@ Table_003_Alliance_30to40 = {
 			[25] = { str = "Escort her when done turn it back in  and accept “Hints of a New Plague? Pt.5” Grind until youre 3500 to 38" },
 			[26] = { str = "Hearth to Southshore" },
 			[27] = { str = "Turn in “Hints of a New Plague? Pt.5” just outside the Inn" },
-			[28] = { str = "Fly to IF for new skills, then to Menethil and boat to Theramore" },
+			[28] = { str = "Fly to Stormwind for new skills and get the quest Morgan Stern from Angus Stern at 41 89, then fly to Menethil and boat to Theramore", x = 41, y = 89, zone = 'Stormwind" },
+
+
 		}
 	},
 
@@ -330,7 +332,7 @@ Table_003_Alliance_30to40 = {
 			[12] = { str = "Run over to 54,56 and open the shipping crate for “Razzeric's Tweaking”", x = 54, y = 56, zone = "Dustwallow Marsh" },
 			[13] = { str = "Hearth to Theramore" },
 			[14] = { str = "Turn in “Mudrock Soup and Bugs” in front of you, accept “… and bugs” " },
-			[15] = { str = "Go outside near the exit and turn in “The Orc Report” accept “Captain Vimes” Run in the castle behind the Inn and turn it in" },
+			[15] = { str = "Go to the docks at the tower and turn in “The Orc Report” accept “Captain Vimes” Run in the castle behind the Inn and turn it in" },
 			[16] = { str = "Turn in “Lieutenant Paval Reethe pt.1” accept “Lieutenant Paval Reethe pt.2” " },
 			[17] = { str = " Turn in “The Black Shield pt.1” accept “The Black Shield pt.2” " },
 			[18] = { str = "Turn in “Suspicious Hoofprints” accept " },
@@ -390,7 +392,7 @@ Table_003_Alliance_30to40 = {
 			[31] = { str = "You should be at lest 25% or less to 40 now go grind on basalisks and raptors around 33,39 until you’re 40.", x = 33, y = 39, zone = "Stranglethorn Vale" },
 			[32] = { str = "Hearth to BB" },
 			[33] = { str = "Go into the shop Tan-Your-Hide Leatherworks and turn in “Excelsior”" },
-			[34] = { str = "Now fly to IF, and either to Darnassus to get your new skills and your mount, or get skills in IF and prepare for a few badlands quests by buying a frost oil and a gyrochronatom (don’t by a gyro if you can’t find a frost oil) Then a healing potion and lesser invisibility potion. Again don’t get either of the potions if you can’t get a frost oil or gyro." },
+			[34] = { str = "Now fly to IF and accept Ironband Wants You from Prospector Stormpike at 74 11, and either to Darnassus to get your new skills and your mount, or get skills in IF and prepare for a few badlands quests by buying a frost oil and a gyrochronatom (don’t by a gyro if you can’t find a frost oil) Then a healing potion and lesser invisibility potion. Again don’t get either of the potions if you can’t get a frost oil or gyro.", x = 74, y = 11, zone = "Iron Forge" },
 			[35] = { str = "Fly to Loch Modan Stable your pet and make Thelsamar your home" },
 			[36] = { str = "Go in the house behind the Inn, accept “Badlands Reagent Run" },
 			[37] = { str = "Run to 65,65 and accept “Find Agmond”", x = 65, y = 65, zone = "Loch Modan" },
