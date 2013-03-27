@@ -86,7 +86,7 @@ Table_002_Mulgore = {
 			[2] = { str = "01) Hearth to Bloodhoof Village. Talk to Skorm Whitecloud (46,60) accept #ACCEPT\"The Hunter's Way\"#.", x = 46, y = 60, zone = "Mulgore" },
 			[3] = { str = "02) Turn in #TURNIN\"Dwarven Digging\"# and #TURNIN\"Thunderhorn Totem\"# then accept #ACCEPT\"Thunderhorn Cleansing\"#." },
 			[4] = { str = "03) Go to 48,60 and speak to Baine Bloodhoof and turn in #TURNIN\"Sharing the Land\"#.", x = 48, y = 60, zone = "Mulgore" },
-			[5] = { str = "04) Go to the Water Well at (49,60) and use it to cleanse your totem in your inventory.", x = 49, y = 60, zone = "Mulgore" },
+			[5] = { str = "04) Go to the Water Well at (44,45) and use it to cleanse your totem in your inventory.", x = 44, y = 45, zone = "Mulgore" },
 			[6] = { str = "05) Go to (45,16) and kill Flatland Prowlers until you have 4 claws.", x = 45, y = 16, zone = "Mulgore" },
 			[7] = { str = "06) Go to (61,47) and you should see the Venture Co. Mine. Kill 14 Workers and 6 Supervisors. Take a right at the first intersection and you should see Fizsprocket, then kill him.", x = 61, y = 47, zone = "Mulgore" },
 			[8] = { str = "07) Go to (59,62) and turn in #TURNIN\"The Venture Co.\"# and #TURNIN\"Supervisor Fizsprocket\"#.", x = 59, y = 62, zone = "Mulgore" },

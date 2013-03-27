@@ -28,7 +28,7 @@ Table_002_Durotar = {
 			[5] = { str = "04) Go start doing: #DOQUEST\"Cutting Teeth\"# (keep step #5 in mind)" },
 			[6] = { str = "05) Once you hit level 2, go accept #ACCEPT\"Sarkoth\"# (at 40.62)", x = 40, y = 62, zone = "Durotar" },
 			[7] = { str = "06) Go do #DOQUEST\"Sarkoth\"# (at 40.66).", x = 40, y = 66, zone = "Durotar" },
-			[8] = { str = "07) Then turn #TURNIN\"Sarkoth\"# in (at 40.66) ... Accept #ACCEPT\"Sarkoth\"# pt.2", x = 40, y = 66, zone = "Durotar" },
+			[8] = { str = "07) Then turn #TURNIN\"Sarkoth\"# in (at 40.62) ... Accept #ACCEPT\"Sarkoth\"# pt.2", x = 40, y = 62, zone = "Durotar" },
 			[9] = { str = "08) Make sure #DOQUEST\"Cutting Teeth\"# is complete." },
 			[10] = { str = "09) Go turn in #TURNIN\"Sarkoth\"# pt.2 and #TURNIN\"Cutting Teeth\"# (at 42.68) ... Accept #ACCEPT\"Etched Tablet\"# and #ACCEPT\"Sting of the Scorpid\"# ", x = 42, y = 68, zone = "Durotar" },
 			[11] = { str = "10) Turn in #ACCEPT\"Etched Tablet\"# (around 43.69) and get new spells/abilities for your class.", x = 43, y = 69, zone = "Durotar" },
