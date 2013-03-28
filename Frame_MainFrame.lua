@@ -979,6 +979,9 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		obj:InitializeDDM()
 		obj.tWidgets.frame_ScrollFrame:SetScrollChild(obj.tWidgets.frame_ScrollFrameChild)
 		obj:RefreshData(true)
+		obj.tWidgets.frame_MainFrame:SetAlpha(tUI.Opacity)
+		obj.tWidgets.frame_MainFrame:SetScale(tUI.Scale)
+		obj.tWidgets.frame_MainFrame:SetFrameStrata(tUI.Layer)
     end
 
     return obj
