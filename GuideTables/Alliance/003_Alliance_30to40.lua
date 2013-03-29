@@ -304,7 +304,7 @@ Table_003_Alliance_30to40 = {
 			[25] = { str = "Escort her when done turn it back in  and accept “Hints of a New Plague? Pt.5” Grind until youre 3500 to 38" },
 			[26] = { str = "Hearth to Southshore" },
 			[27] = { str = "Turn in “Hints of a New Plague? Pt.5” just outside the Inn" },
-			[28] = { str = "Fly to Stormwind for new skills and get the quest Morgan Stern from Angus Stern at 41 89, then fly to Menethil and boat to Theramore", x = 41, y = 89, zone = 'Stormwind" },
+			[28] = { str = "Fly to Stormwind for new skills and get the quest Morgan Stern from Angus Stern at 41 89, then fly to Menethil and boat to Theramore", x = 41, y = 89, zone = "Stormwind" },
 
 
 		}

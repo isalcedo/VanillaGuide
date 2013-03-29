@@ -67,7 +67,7 @@ function objSettingsFrame:new(fParent, tTexture, oSettings)
 		frame:SetHeight(300)
 		-- detach Setting frame from Main Frame, avoiding "scale" bug
 		--frame:SetPoint("TOPRIGHT", fParent, "TOPLEFT", -10, 0)
-		frame:SetPoint("CENTERT", nil, "CENTER", 0, 0)
+		frame:SetPoint("CENTER", nil, "CENTER", 0, 0)
 		frame:SetBackdrop(tTexture.BACKDROP)
 		frame:SetBackdropColor(.01, .01, .01, .91)
 		frame:SetMovable(true)
