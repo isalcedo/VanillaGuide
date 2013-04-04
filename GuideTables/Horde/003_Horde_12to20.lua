@@ -1,13 +1,15 @@
 --[[--------------------------------------------------
 003_Horde_12to20.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: Guide Serie - 003 From Lvl 12 to Lvl 20
     1.04.1
         -- First Release
             Horde's Guide
             from level 12 to lever 20
+    1.04.2
+    	-- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------

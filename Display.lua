@@ -3,7 +3,7 @@
 ------------------
 Display.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: 
 		The Display object keeps track of what 
@@ -20,6 +20,8 @@ Description:
 			MainFrame will display.
 			It'll communicate with the GuideTable object
 			getting guides and steps from there...hopefully...
+	1.04.2
+		-- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------

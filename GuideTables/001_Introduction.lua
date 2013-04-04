@@ -1,12 +1,14 @@
 --[[--------------------------------------------------
 001-Introduction.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: Guide Serie - 001 Introduction
     1.04.1
         -- First Release
             Introduction text
+    1.04.2
+        -- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------

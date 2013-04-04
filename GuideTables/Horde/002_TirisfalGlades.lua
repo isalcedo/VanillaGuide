@@ -1,13 +1,15 @@
 --[[--------------------------------------------------
 002-TirisfalGlades.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: Guide Serie - 002 Tirisfal Glades
     1.04.1
         -- First Release
             Undead Tirisfal Glades's Guide
             from level 1 to lever 12
+    1.04.2
+    	-- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------

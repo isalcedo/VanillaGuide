@@ -3,11 +3,11 @@
 ------------------
 Core.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: 
-    Powerleveling Guide for 1.12.1 servers
-    based on Joana Guide. Core FILE!
+        Powerleveling Guide for 1.12.1 servers
+        based on Joana Guide. Core FILE!
     1.00
         -- Initial Ace2 release
 	1.99a
@@ -23,6 +23,8 @@ Description:
         -- Two New object created:
             .Settings, containing various settings (unneeded?)
             .GuideTables, containing the actual guides
+    1.04.2
+        -- no changes in here for this revision
 --]]--------------------------------------------------
 
 --[[--------------------------------------------------
@@ -167,8 +169,7 @@ function VGuide:OnEnable(first)
     local Race = UnitRace("player")
     local Faction = UnitFactionGroup("player")
     Di(" Title: " .. title)
-    Di("    Author: " .. author)
-    Di("    Version: " .. version)
+    Di("    Author: " .. author .. "     Version: |cccff1919" .. version .. "|r")
     Dv("     - CharName: " .. CharName)
     Dv("     - RealmName: " .. RealmName)
     Dv("     - Class: " .. Class)

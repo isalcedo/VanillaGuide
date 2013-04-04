@@ -1,13 +1,15 @@
 --[[--------------------------------------------------
 003_Horde_30to40.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: Guide Serie - 003 From Lvl 30 to Lvl 40
     1.04.1
         -- First Release
             Horde's Guide
             from level 30 to lever 40
+    1.04.2
+    	-- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------

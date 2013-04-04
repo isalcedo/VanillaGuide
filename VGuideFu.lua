@@ -3,7 +3,7 @@
 ------------------
 VGuideFu.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: 
       Fubar plugin for VGuide
@@ -17,6 +17,8 @@ Description:
 	1.04.1
 		-- Just minor adjustments to reflect changes in the 
 			rest of addon
+	1.04.2
+		-- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------

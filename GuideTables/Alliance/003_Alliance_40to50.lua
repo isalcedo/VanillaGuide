@@ -1,13 +1,15 @@
 --[[--------------------------------------------------
 003_Alliance_40to50.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: Guide Serie - 003 From Lvl 40 to Lvl 50
     1.04.1
         -- First Release
             Alliance's Guide
             from level 40 to lever 50
+    1.04.2
+    	-- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------

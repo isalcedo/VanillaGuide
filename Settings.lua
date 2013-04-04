@@ -3,7 +3,7 @@
 ------------------
 Settings.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: 
     	This object handles the various addon settings
@@ -17,6 +17,11 @@ Description:
 	1.04.1
 		-- Settings and/or "Saved Variables" are inclosed in
 			VGuide.Settings
+	1.04.2
+		-- scraped MetaMapBWP settings for MetaMapBWP
+			Now support for MetaMapNotes, too
+		-- Added a function for a proper MetaMap checking
+			MetaMapBWPSupportCheck()
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------
@@ -101,12 +106,13 @@ function objSettings:new()
 			ShowGuideStep = false,
 			ShowLabels = true,
 		},
-		--MetaMapBWPSupport = false,
-		--MetaMapBWPSupportEnable = false,
-		MetaMapBWP = {
-			Support = false,
-			Enable = false,
-		}
+		MetaMap = {
+			Presence = false,
+			NotesPresence = false,
+			BWPPresence = false,
+			NotesEnable = false,
+			BWPEnable = false,
+		},
 	}
 
 	obj = AceLibrary("AceAddon-2.0"):new("AceDB-2.0")
@@ -123,9 +129,12 @@ function objSettings:new()
 		Dv(" -  - Faction: " .. tostring(obj.db.char.CharInfo.Faction))
 		Dv(" -  - Race: " .. tostring(obj.db.char.CharInfo.Race))
 		Dv(" ------------------")
-		Dv(" -- MetaMapBWP")
-		Dv(" -  - Enable: " .. tostring(obj.db.char.MetaMapBWP.Enable))
-		Dv(" -  - Support: " .. tostring(obj.db.char.MetaMapBWP.Support))
+		Dv(" -- MetaMap")
+		Dv(" -  - Presence: " .. tostring(obj.db.char.MetaMap.Presence))
+		Dv(" -  - NotesPresence: " .. tostring(obj.db.char.MetaMap.NotesPresence))
+		Dv(" -  - BWPPresence: " .. tostring(obj.db.char.MetaMap.BWPPresence))
+		Dv(" -  - Notes: " .. tostring(obj.db.char.MetaMap.NotesEnable))
+		Dv(" -  - BWP: " .. tostring(obj.db.char.MetaMap.BWPEnable))
 		Dv(" ------------------")
 		Dv(" -- GuideValues")
 		Dv(" -  - GuideID: " .. tostring(obj.db.char.GuideValues.GuideID))
@@ -138,8 +147,64 @@ function objSettings:new()
 	end
 
 	obj.CheckSettings = function(self)
+		local function MetaMapBWPSupportCheck()
+			local MetaMapPresence, MetaMapNotesPresence, MetaMapBWPPresence
+			Dv("    MetaMap Support Check:")
+			-- control THESE TOO, although they're part of the WoW API
+			-- GetZoneText, GetRealZoneText, GetSubZoneText, GetMinimapZoneText. 
+
+			-- MetaMap Support Check
+			if IsAddOnLoaded("MetaMap") then
+				if MetaMap_GetCurrentMapInfo and MetaMap_NameToZoneID then
+					Di("      - MetaMap Support Present")
+					MetaMapPresence = true
+					-- MetaMapNotes Support Check
+					if MetaMapNotes_AddNewNote then
+						Di("      - MetaMapNotes Support Present")
+						MetaMapNotesPresence = true
+					else 
+						Di("      - MetaMapNotes Support not Present - no markers on your WorldMap")
+						MetaMapNotesPresence = false
+					end
+					-- MetaMapBWP Support Check
+					-- let's try to load the BWP module if it's not already
+					if not IsAddOnLoaded("MetaMapBWP") then
+						LoadAddOn("MetaMapBWP");
+					end
+					if IsAddOnLoaded("MetaMapBWP") then
+						-- let's load the BWP module in "always on" mode
+						if MetaMap_LoadBWP then
+							-- MetaMap_LoadBWP(id, mode)
+							--   mode 0 BWP_CallMenu();
+							--   mode 1 MetaKBMenu_RBSelect(id);
+							--   mode 2 MetaMapNotes_RBSelect(id);
+							--   mode 3 should be BWPAlwaysOn
+							MetaMap_LoadBWP(0, 3)
+							if BWP_ClearDest and BWP_DisplayFrame and BWPDistanceText and BWPDestText then
+								Di("      - MetaMapBWP Support Present")
+								MetaMapBWPPresence = true
+							else
+								Di("      - MetaMapBWP Support not Present - no pointing arrow for ya")
+								MetaMapBWPPresence = false
+							end
+						end
+					else
+						Di("      - MetaMapBWP Support not Present - no pointing arrow for ya")
+						MetaMapBWPPresence = false
+					end
+				else
+					Di("      - MetaMap Support not Present - no pointing arrow and no markers on your WorldMap")
+					MetaMapPresence = false
+				end
+			else
+				Di("      - MetaMap Support not Present - no pointing arrow and no markers on your WorldMap")
+				MetaMapPresence = false
+			end
+			return MetaMapPresence, MetaMapNotesPresence, MetaMapBWPPresence
+		end
+
 		if obj.db.char.CharInfo.CharName == "Unknown" then
-			Di(" New Settings for " .. AceLibrary("AceDB-2.0").CHAR_ID .. " - " .. AceLibrary("AceDB-2.0").FACTION )
+			Di(" New Settings for \"|cFFbb7777" .. AceLibrary("AceDB-2.0").CHAR_ID .. " - " .. AceLibrary("AceDB-2.0").FACTION .."|r\"")
 			obj.db.char.CharInfo.CharName = AceLibrary("AceDB-2.0").NAME
 			obj.db.char.CharInfo.RealmName = AceLibrary("AceDB-2.0").REALM
 			obj.db.char.CharInfo.Class = AceLibrary("AceDB-2.0").CLASS_ID
@@ -147,28 +212,17 @@ function objSettings:new()
 			obj.db.char.CharInfo.Faction = AceLibrary("AceDB-2.0").FACTION
 		elseif obj.db.char.CharInfo.CharName == AceLibrary("AceDB-2.0").NAME then
 			if obj.db.char.CharInfo.Faction ~= AceLibrary("AceDB-2.0").FACTION then
-				Di(" Settings for " .. AceLibrary("AceDB-2.0").CHAR_ID .. "" .. AceLibrary("AceDB-2.0").FACTION .. " need to be wiped out!")
+				Di(" Settings for \"|cFFbb7777 " .. AceLibrary("AceDB-2.0").CHAR_ID .. " - " .. AceLibrary("AceDB-2.0").FACTION .. "|r\" need to be wiped out!")
 				Di("   This character was already used on the opposite faction!")
 				obj:ResetDB("char")
 			else
-				Di(" Settings for " .. AceLibrary("AceDB-2.0").CHAR_ID .. " - " .. AceLibrary("AceDB-2.0").FACTION .. " loaded!")
+				Di(" Settings for \"|cFFbb7777" .. AceLibrary("AceDB-2.0").CHAR_ID .. " - " .. AceLibrary("AceDB-2.0").FACTION .. "|r\" loaded!")
 			end
 		end
-		--- MetaMap BWP Support Check!
-		if MetaMap_LoadBWP and MetaMap_NameToZoneID then
-			Di("  !MetaMap Support Check")
-			MetaMap_LoadBWP(0, 3)
 
-			if setmininote and BWP_ClearDest then --and 
-				--BWP_GetDistText and BWPDestText and 
-				--BWPDistanceText and BWP_DiplayFrame then
-				Di("    -- MetaMapBWP Support Present")
-				obj.db.char.MetaMapBWP.Support = true
-			else
-				Di("    -- MetaMapBWP Support NOT Present")
-				obj.db.char.MetaMapBWP.Support = false
-			end
-		end
+		obj.db.char.MetaMap.Presence, 
+		obj.db.char.MetaMap.NotesPresence,	
+		obj.db.char.MetaMap.BWPPresence = MetaMapBWPSupportCheck()
 	end
 
 	obj.GetSettingsCharInfo = function(self)
@@ -186,9 +240,9 @@ function objSettings:new()
 	obj.GetSettingsVGuideFu = function(self)
 		return obj.db.char.VGuideFu
 	end
-	
-	obj.GetSettingsMetaMapBWP = function(self)
-		return obj.db.char.MetaMapBWP
+
+	obj.GetSettingsMetaMap = function(self)
+		return obj.db.char.MetaMap
 	end
 
 	obj.GetSettingsEntireCharDB = function(self)
@@ -211,8 +265,8 @@ function objSettings:new()
 		obj.db.char.VGuideFu = tVGuideFu
 	end
 
-	obj.SetSettingsMetaMapBWP = function(self, tMetaMapBWP)
-		obj.db.char.MetaMapBWP = tMetaMapBWP
+	obj.SetSettingsMetaMap = function(self, tMetaMap)
+		obj.db.char.MetaMap = tMetaMap
 	end
 
 	obj.SetSettingEntireCharDB = function(self, tSettingsTable)

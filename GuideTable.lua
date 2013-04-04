@@ -3,11 +3,10 @@
 ------------------
 GuideTable.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: 
-    Powerleveling Guide for 1.12.1 servers
-    based on Joana Guide
+    	Object Handling the Guides
     1.00
 		-- Initial Ace2 release
 	1.99a
@@ -20,6 +19,8 @@ Description:
 			upon player login.
 			We'll include all the needed guides here and we'll provide
 			function to retrive informations too
+	1.04.2
+		-- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------

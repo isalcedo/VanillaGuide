@@ -2,13 +2,13 @@
 ## Title: VanillaGuide |cff7fff7f -Ace2-|r
 ## Notes: Step-by-Step 1to60 Guides, in an Ace2 addon.
 ## Author: mrmr
-## Version: 1.04.1
+## Version: 1.04.2
 ## DefaultState: enabled
 ## LoadOnDemand: 0
 
 ## X-Credits: Joana/Mancow and Brian Kopps for the guides. myself for the Joana's guide and the addon itself. Kira and Cdlp for the Brian Kopps' guide. Velenran for Profession guides.
 ## X-Category: Quests
-## X-Date: 2013-03-18
+## X-Date: 2013-03-29
 ## X-ReleaseDate: 2012-xx-xx
 ## X-Email: rsheep@gmail.com
 ## X-Website: http://vanillaguide.googlecode.com

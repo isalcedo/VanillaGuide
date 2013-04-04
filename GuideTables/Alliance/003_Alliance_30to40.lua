@@ -1,13 +1,15 @@
 --[[--------------------------------------------------
 003_Alliance_30to40.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: Guide Serie - 003 From Lvl 30 to Lvl 40
     1.04.1
         -- First Release
             Alliance's Guide
             from level 30 to lever 40
+    1.04.2
+    	-- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------
@@ -305,8 +307,6 @@ Table_003_Alliance_30to40 = {
 			[26] = { str = "Hearth to Southshore" },
 			[27] = { str = "Turn in “Hints of a New Plague? Pt.5” just outside the Inn" },
 			[28] = { str = "Fly to Stormwind for new skills and get the quest Morgan Stern from Angus Stern at 41 89, then fly to Menethil and boat to Theramore", x = 41, y = 89, zone = "Stormwind" },
-
-
 		}
 	},
 

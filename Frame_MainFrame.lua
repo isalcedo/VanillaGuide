@@ -3,11 +3,10 @@
 ------------------
 Frame_MainFrame.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: 
-    Powerleveling Guide for 1.12.1 servers
-    based on Joana Guide
+    	Main Frame Object
     1.00
 		-- Initial Ace2 release
 	1.99a
@@ -17,6 +16,14 @@ Description:
     		1.99x for a beta release was a weird choise.
 	1.04.1
 		-- Main Frame object
+	1.04.2
+		-- Reworked "MetaMapBWP" and renamed to "MetaMap"
+			cause now there's support for MetaMapNotes too
+			Now, the methods are called:
+		obj.RefreshMetaMap()
+		obj.SetMetaMapDestination(self, nX, nY, sZone, title, step, label, mode)
+			Diffentes modes, produces different behaviour, 
+			see the source for insight
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------
@@ -167,8 +174,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 				fStep:SetPoint("BOTTOMRIGHT", this, "RIGHT", -5, Gap)
 				fScroll:SetPoint("TOPLEFT", fStep, "BOTTOMLEFT", 0, -2)
 			end
-			--VGuide.db.char.UIoptions.MainFrameSize.nWidth = width
-			--VGuide.db.char.UIoptions.MainFrameSize.nHeight = height
 			tUI.MainFrameSize = {
 				nWidth = width,
 				nHeight = height,
@@ -226,7 +231,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
     local function Render_MFDropDownMenu(fParent, sName)
 		local frame= CreateFrame("Frame", sName, fParent)
 		frame.UncheckHack = function()
-		  --_G[this:GetName().."Check"]:Hide()
 		  getglobal(this:GetName().."Check"):Hide()
 		end
 		frame.displayMode = "MENU"
@@ -275,7 +279,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		local fs = fParent:CreateFontString(sName, "ARTWORK", "GameFontNormalSmall")
 		fs:SetPoint("TOPLEFT", fParent, "TOPLEFT", 5, -5)
 		fs:SetPoint("BOTTOMRIGHT", fParent, "BOTTOMRIGHT", -5, 5)
-		--fs:SetTextColor(.91, .91, .91, .99)
 		fs:SetTextColor(tColor.nR, tColor.nG, tColor.nB, tColor.nA)
 		fs:SetJustifyH("LEFT")
 		fs:SetJustifyV("TOP")
@@ -324,8 +327,8 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		sld.background:SetAllPoints(true)
 		sld.background:SetTexture(.0, .0, .0, 0.5)
 		sld.thumb = fParent:CreateTexture(nil, "OVERLAY")
-		--sld.thumb:SetTexture("Interface\\AddOns\\VGuide\\textures\\flash-up-round")
-		sld.thumb:SetTexture("Interface\\Buttons\\UI-ScrollBar-Knob")
+		sld.thumb:SetTexture("Interface\\AddOns\\VanillaGuide\\Textures\\Buttons\\Button-Flash-Normal")
+		--sld.thumb:SetTexture("Interface\\Buttons\\UI-ScrollBar-Knob")
 		sld.thumb:SetWidth(31)
 		sld.thumb:SetHeight(31)
 		sld:SetThumbTexture(sld.thumb)
@@ -338,13 +341,11 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		end)
 		return sld
     end
-    --local function ChangeView(nMainFrameHeight, bStepFrame, bScrollFrame, tUI)
+
     local function ChangeView(tUI)
 		local fMain = getglobal("VG_MainFrame")
 		local fStep = getglobal("VG_MainFrame_StepFrame")
 		local fScroll = getglobal("VG_MainFrame_ScrollFrame")
-		--local fChild = getglobal("VG_MainFrame_ScrollFrameChild")
-		--local fSlider = getglobal("VG_MainFrame_ScrollFrameSlider")
 		local nStepScroll = tUI.StepScroll
 		local bStepFrame = tUI.StepFrameVisible
 		local bScrollFrame = tUI.ScrollFrameVisible
@@ -383,7 +384,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
     -------------------------------
     --do
 	-- Addon Main Frame and Title
-		--obj.obj.tWidgets.frame_MainFrame = Render_MF(UIParent, "VG_MainFrame")
 		obj.tWidgets.frame_MainFrame = Render_MF(nil, "VG_MainFrame", tTexture, tUI)
 		obj.tWidgets.frame_MainFrame.isMoving = nil
 		obj.tWidgets.frame_MainFrame.isResizing = nil
@@ -449,8 +449,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		obj.tWidgets.frame_ScrollFrameChild.Entries = {}
 		obj.tWidgets.frame_ScrollFrameChild.nFSTotalWidth = 0
 		obj.tWidgets.frame_ScrollFrameChild.nFSTotalHeight = 0
-		--obj.tWidgets.frame_ScrollFrameChild.nSHTotalWidth = 0
-		--obj.tWidgets.frame_ScrollFrameChild.nSHTotalHeight = 0
 		obj.tWidgets.frame_ScrollFrameChild:SetPoint("TOPLEFT", obj.tWidgets.frame_ScrollFrame, "TOPLEFT", 0, 0)
 		obj.tWidgets.frame_ScrollFrameChild:SetPoint("BOTTOMRIGHT", obj.tWidgets.frame_ScrollFrame, "BOTTOMRIGHT", 0, 0)
 		obj.tWidgets.slider_ScrollFrameSlider = Render_MFScrollFrameSlider(obj.tWidgets.frame_ScrollFrame, "VG_MainFrame_ScrollFrameSlider")
@@ -463,7 +461,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
     -------------------------------
 	do
     -- Close Button
-    	--obj.tWidgets.button_CloseButton:SetScript("OnClick", objMainFrame:HideFrame())
 		obj.tWidgets.button_CloseButton:SetScript("OnClick", function()
 			local fMain = getglobal("VG_MainFrame")
 			local fSettings = getglobal("VG_SettingsFrame")
@@ -484,8 +481,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 			if bLocked then
 				this:SetNormalTexture(tTexture.B_UNLOCKED.NORMAL)
 				this:SetPushedTexture(tTexture.B_UNLOCKED.PUSHED)
-				--tUIoptions.Locked = false
-				--VGuide.db.profile.UIoptions.Locked = false
 				tUI.Locked = false
 				oSettings:SetSettingsUI(tUI)
 				frame:SetMovable(true)
@@ -493,9 +488,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 			else
 				this:SetNormalTexture(tTexture.B_LOCKED.NORMAL)
 				this:SetPushedTexture(tTexture.B_LOCKED.PUSHED)
-				--tUIoptions.Locked = true
-				--VGuide.db.profile.UIoptions.Locked = true
-				--VGuide.db.char.UIoptions.Locked = true
 				tUI.Locked = true
 				oSettings:SetSettingsUI(tUI)
 				frame:SetMovable(false)
@@ -503,7 +495,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 			end
 		end)
 	-- Settings Button
-		--obj.tWidgets.button_SettingsButton:SetScript("OnClick", objSettingsFrame:Hide())
 		obj.tWidgets.button_SettingsButton:SetScript("OnClick", function()
 			local fSettings = getglobal("VG_SettingsFrame")
 			if fSettings:IsVisible() then
@@ -513,7 +504,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 			end
 		end)
 	-- About Button
-		--obj.tWidgets.button_AboutButton:SetScript("OnClick", objAboutFrame:Hide())
 		obj.tWidgets.button_AboutButton:SetScript("OnClick", function()
 		  local fAbout = getglobal("VG_AboutFrame")
 		  if fAbout:IsVisible() then
@@ -539,13 +529,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 				bStepFrame = true
 				bScrollFrame = true
 			end
-			--ChangeView(nMainFrameHeight, bStepFrame, bScrollFrame)
-			--tUIoptions.StepFrameVisible = bStepFrame
-			--tUIoptions.ScrollFrameVisible = bScrollFrame
-			--VGuide.db.profile.UIoptions.StepFrameVisible = bStepFrame
-			--VGuide.db.profile.UIoptions.ScrollFrameVisible = bScrollFrame
-			--VGuide.db.char.UIoptions.StepFrameVisible = bStepFrame
-			--VGuide.db.char.UIoptions.ScrollFrameVisible = bScrollFrame
 			tUI.StepFrameVisible = bStepFrame
 			tUI.ScrollFrameVisible = bScrollFrame
 			oSettings:SetSettingsUI(tUI)
@@ -554,13 +537,11 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		end)
 	-- Prev and Next Guide Buttons
 		obj.tWidgets.button_PrevGuideButton:SetScript("OnClick", function()
-			--GuideChange(oDisplay, "BACKWARD")
 			--Dv("     --- Prev Guide ---")
 			oDisplay:PrevGuide()
 			obj:RefreshData()
 		end)
 		obj.tWidgets.button_NextGuideButton:SetScript("OnClick", function()
-			--GuideChange(oDisplay, "FORWARD")
 			--Dv("     --- Next Guide ---")
 			oDisplay:NextGuide()
 			obj:RefreshData()
@@ -568,37 +549,11 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 	-- Prev and Next Step Buttons
 		obj.tWidgets.button_PrevStepButton:SetScript("OnClick", function()
 			--Dv("     --- Prev Step ---")
-			--[[
-			local tColF = tUIoptions.StepFrameColor
-			local fChild = getglobal("VG_MainFrame_ScrollFrameChild")
-			local locX, locY, zone
-			local step = oDisplay:GetStep()
-			fChild.shEntryHandle[step]:SetBackdropColor(.1, .1, .1, .5)
-			locX, locY, zone = StepChange(oDisplay, "Backward")
-			local step = oDisplay:GetStep()
-			fChild.shEntryHandle[step]:SetBackdropColor(tColF.nR, tColF.nG, tColF.nB, tColF.nA)
-			if VGuide.db.char.MetaMapBWPSupportEnable then
-				UI.SetMetaMapBWPDestination(locX, locY, zone)
-			end
-			]]
 			oDisplay:PrevStep()
 			obj:RefreshData()
 		end)
 		obj.tWidgets.button_NextStepButton:SetScript("OnClick", function()
 			--Dv("     --- Next Step ---")
-			--[[
-			local tColF = tUIoptions.StepFrameColor
-			local fChild = getglobal("VG_MainFrame_ScrollFrameChild")
-			local locX, locY, zone
-			local step = oDisplay:GetStep()
-			fChild.shEntryHandle[step]:SetBackdropColor(.1, .1, .1, .5)
-			locX, locY, zone = StepChange(oDisplay, "Forward")
-			local step = oDisplay:GetStep()
-			fChild.shEntryHandle[step]:SetBackdropColor(tColF.nR, tColF.nG, tColF.nB, tColF.nA)
-			if VGuide.db.char.MetaMapBWPSupportEnable then
-				UI.SetMetaMapBWPDestination(locX, locY, zone)
-			end
-			]]
 			oDisplay:NextStep()
 			obj:RefreshData()
 		end)
@@ -679,11 +634,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 					local tx = strsub(this:GetName(), 11)
 					oDisplay:StepByID(tonumber(tx))
 					obj:RefreshData(false)
-					--local locX, locY, zone
-					--locX, locY, zone = StepChange(VGuide.UI.Display, "Step", tonumber(t))
-					--if VGuide.db.char.MetaMapBWPSupportEnable then
-					--	UI.SetMetaMapBWPDestination(locX, locY, zone)
-					--end
 				end
 			end)
 			t[k] = sh
@@ -744,7 +694,6 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		scrollFrameWidth = scrollFrameWidth * (1/s)
 
 		obj:ScrollFrameChildEntriesHide()
-		--obj:ScrollFrameChildEntriesDelete()
 		
 		local t = {}
 		t = oDisplay:GetScrollFrameDisplay()
@@ -812,9 +761,34 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		fScroll:UpdateScrollChildRect()
 	end
 
-	obj.RefreshMetaMapBWP = function(self)
+	obj.RefreshMetaMap = function(self)
+		local tMetaMap = oSettings:GetSettingsMetaMap()
+		-- mode can be:
+		-- nil == no MetaMap
+		-- 1 = Notes Enabled
+		-- 2 = BWP Enabled
+		-- 3 = Notes & BWP Enabled
+		local mode
+		if tMetaMap.Presence then 
+			if (tMetaMap.NotesPresence and tMetaMap.NotesEnable) and 
+					not (tMetaMap.BWPPresence and tMetaMap.BWPEnable) then
+				mode = 1
+			elseif not (tMetaMap.NotesPresence and tMetaMap.NotesEnable) and 
+					(tMetaMap.BWPPresence and tMetaMap.BWPEnable) then
+				mode = 2	
+			elseif (tMetaMap.NotesPresence and tMetaMap.NotesEnable) and 
+					(tMetaMap.BWPPresence and tMetaMap.BWPEnable) then
+				mode = 3
+			else 
+				mode = nil
+			end
+		end
+		
+		local title = oDisplay:GetGuideTitle() 
+		local step = oDisplay:GetCurrentStep()
+		local label = oDisplay:GetStepLabel()
 		local t = oDisplay:GetCurrentStepInfo()
-		obj:SetMetaMapBWPDestination(t.x, t.y, t.zone)
+		obj:SetMetaMapDestination(t.x, t.y, t.zone, title, step, label, mode)
 	end
 
 	obj.RefreshData = function(self)
@@ -823,10 +797,7 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		obj:RefreshDropDownMenuLabel()
 		obj:RefreshDropDownMenuLabel()
 		obj:RefreshScrollFrame()
-		local tMetaMapBWP = oSettings:GetSettingsMetaMapBWP()
-		if tMetaMapBWP.Support and tMetaMapBWP.Enable then
-			obj:RefreshMetaMapBWP()
-		end
+		obj:RefreshMetaMap()
 	end
 
 	local function AddToDDM(nLevel, sType, sLabel, nID)
@@ -915,66 +886,72 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		UIDropDownMenu_Initialize(obj.tWidgets.frame_DropDownMenu, DropDown_Init)
 	end
 
-	obj.SetMetaMapBWPDestination = function(self, nX, nY, sZone)
-		local fBWP_DisplayFrame = getglobal("BWP_DisplayFrame")
-		local sBWPDistanceText = getglobal("BWPDistanceText")
-		local sBWPDestText = getglobal("BWPDestText")
-		--local fsetmininote = getglobal("setmininote")
-		--local fMetaMapNotes_AddNewNote = getglobal("MetaMapNotes_AddNewNote")
-
-		if not fBWP_DisplayFrame or not sBWPDestText or not sBWPDistanceText then --or not fsetmininote then
-			Dv("  ??? BWP not working :P")
-		elseif nX and nY and sZone then
-			local continent, zone = MetaMap_NameToZoneID(GetRealZoneText())
-
-			BWP_Destination = {}
-			BWP_Destination.name = sZone
-			BWP_Destination.x = nX/100
-			BWP_Destination.y = nY/100
-			BWP_Destination.zone = MetaMap_ZoneNames[continent][zone]
-			if sZone == BWP_Destination.zone then
-				local frame = getglobal("BWPDestText")
-				frame:SetText("["..BWP_Destination.name.."] - [" .. BWP_Destination.x*100 .. "," .. BWP_Destination.y*100 .. "]")
-				local frame = getglobal("BWPDistanceText")
-				frame:SetText(BWP_GetDistText())
-				local frame = getglobal("BWP_DisplayFrame")
-				frame:Show()
-				--fMetaMapNotes_AddNewNote(continent, zone, 
-				--	BWP_Destination.x, BWP_Destination.y, BWP_Destination.name, 
-				--	nil, nil, "VanillaGuide", "8", nil, nil, nil, 2)
-				--fsetmininote(BWP_Destination.x, BWP_Destination.y, BWP_Destination.name, "7", continent, zone)
-			else
-				BWP_ClearDest() 
-				local frame = getglobal("BWP_DisplayFrame")
-				frame:Hide()
+	obj.SetMetaMapDestination = function(self, nX, nY, sZone, title, step, label, mode)
+		-- mode can be:
+		-- nil == no MetaMap
+		-- 1 = Notes Enabled
+		-- 2 = BWP Enabled
+		-- 3 = Notes & BWP Enabled
+		if nX and nY and sZone then
+			local continent, zone, _, mapName = MetaMap_GetCurrentMapInfo()
+			local normX = nX/100
+			local normY = nY/100
+			if mode == 2 or mode == 3 then
+				BWP_Destination = {}
+				BWP_Destination.name = sZone
+				BWP_Destination.x = normX
+				BWP_Destination.y = normY
+				BWP_Destination.zone = MetaMap_ZoneNames[continent][zone]
+				if sZone == mapName then
+					local frame = getglobal("BWPDestText")
+					frame:SetText("["..BWP_Destination.name.."] - [" .. BWP_Destination.x*100 .. "," .. BWP_Destination.y*100 .. "]")
+					local frame = getglobal("BWPDistanceText")
+					frame:SetText(BWP_GetDistText())
+					local frame = getglobal("BWP_DisplayFrame")
+					frame:Show()
+				end
 			end
+			if mode == 1 or mode == 3 then
+				if sZone == mapName then
+					-- function MetaMapNotes_AddNewNote(continent, zone, 
+					--		xPos, yPos, 
+					--		name, inf1, inf2, 
+					--		creator, 
+					--		icon, 
+					--		ncol, in1c, in2c, mininote)
+					--
+					-- Colors
+					--	0 "Yellow" (standard WoW Text Color?)
+					--  1 "Dark Yellow"
+					--	2 "Red"
+					--	3 "Dark Red"
+					--	4 "Green"
+					--	5 "Dark Green"
+					--	6 "Blu"
+					--	7 "Dark Blu"
+					--	8 "White"
+					--  9 "Dark White"
+					-- Icon can be from 1 to 9
+					-- mininote can be 0,1,2 everything else, default to 0 (even nil)
+					--    0 - MapNote only
+					--    1 - MapNote & mininote
+					--    2 - mininote only
+					MetaMapNotes_AddNewNote(continent, zone, normX, normY, 
+						"VG: Step[" .. step .. "] " .. title,
+						mapName, label, "VanillaGuide", 6, 6, 9, 8, 1)
+				end
+			end
+		else 
+			BWP_ClearDest() 
+			local frame = getglobal("BWP_DisplayFrame")
+			frame:Hide()
 		end
 	end
-
+	
 	-------------------------------
     --- Initialization
     -------------------------------
     do
-		-- DropDown Menu Initialization
-		--tWidgets.fs_DropDownMenuZone:SetText("Inizialization")
-		--UIDropDownMenu_Initialize(tWidgets.frame_DropDownMenu, DropDown_Init)
-		-- Step Frame Initialization
-		--local nStep = tGuideValues.Step
-		--local sTextStepLabel = tFSEntries[nStep]
-		--tWidgets.fs_StepFrame:SetText("Initialization text")
-		--tWidgets.fs_StepNumber:SetText("1")
-		-- Scroll Frame Initialization
-		--local nGID = tGuideValues.GuideID
-		--GuideChange("GID", nGID)
-		--tWidgets.frame_ScrollFrame:SetScrollChild(tWidgets.frame_ScrollFrameChild)
-		--tWidgets.frame_ScrollFrame:UpdateScrollChildRect()
-		-- MainFrame View
-		
-
-		--local bStepFrame = tUI.StepFrameVisible
-		--local bScrollFrame = tUI.ScrollFrameVisible
-		--local nHeight = tUI.MainFrameSize.nHeight
-		--ChangeView(nHeight, bStepFrame, bScrollFrame)
 		ChangeView(tUI)
 		obj:InitializeDDM()
 		obj.tWidgets.frame_ScrollFrame:SetScrollChild(obj.tWidgets.frame_ScrollFrameChild)

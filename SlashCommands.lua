@@ -3,7 +3,7 @@
 ------------------
 SlashCommands.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: 
       This file handles Slash Commands using Ace2 lib
@@ -16,6 +16,8 @@ Description:
 			1.99x for a beta release was a weird choise.
 	1.04.1
 		-- no changes at all ;)
+	1.04.2
+		-- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------

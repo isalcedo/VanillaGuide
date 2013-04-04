@@ -3,11 +3,10 @@
 ------------------
 Frame_SettingsFrame.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: 
-    Powerleveling Guide for 1.12.1 servers
-    based on Joana Guide
+    	Settings Frame Object
     1.00
 		-- Initial Ace2 release
 	1.99a
@@ -17,6 +16,9 @@ Description:
     		1.99x for a beta release was a weird choise.
 	1.04.1
 		-- Settings Frame object
+	1.04.2
+		-- One more setting for MetaMapNotes
+		(like the one for MetaMapBWP)
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------
@@ -28,8 +30,6 @@ Dv(" VGuide Frame_SettingsFrame.lua Start")
 objSettingsFrame = {}
 objSettingsFrame.__index = objSettingsFrame
 
---function objSettingsFrame:new(fParent, tTexture, tOptions)
---function objSettingsFrame:new(fParent, tTexture, tCharInfo, tUI, tMetaMapBWP)
 function objSettingsFrame:new(fParent, tTexture, oSettings)	
 	fParent = fParent or nil
 	local obj = {}
@@ -37,7 +37,8 @@ function objSettingsFrame:new(fParent, tTexture, oSettings)
 
     local tCharInfo = oSettings:GetSettingsCharInfo()
     local tUI = oSettings:GetSettingsUI()
-    local tMetaMapBWP = oSettings:GetSettingsMetaMapBWP()
+    --local tMetaMapBWP = oSettings:GetSettingsMetaMapBWP()
+    local tMetaMap = oSettings:GetSettingsMetaMap()
 
    	local bMinimapToggle = tUI.MinimapToggle
 	local nMinimapPos = tUI.MinimapPos
@@ -64,7 +65,7 @@ function objSettingsFrame:new(fParent, tTexture, oSettings)
 		frame:SetScale(1)
 		frame:SetFrameStrata("TOOLTIP")
 		frame:SetWidth(220)
-		frame:SetHeight(300)
+		frame:SetHeight(315)
 		-- detach Setting frame from Main Frame, avoiding "scale" bug
 		--frame:SetPoint("TOPRIGHT", fParent, "TOPLEFT", -10, 0)
 		frame:SetPoint("CENTER", nil, "CENTER", 0, 0)
@@ -87,26 +88,46 @@ function objSettingsFrame:new(fParent, tTexture, oSettings)
 		btn:SetPoint("TOPRIGHT", fParent, "TOPRIGHT", -5, -5)
 		return btn
 	end
-	local function Render_SFMetamapBWPSupportCheckBox(fParent, sName, tMetaMapBWP)
+	local function Render_SFMetamapNotesSupportCheckBox(fParent, sName, tMetaMap)
+		local chkbtn = CreateFrame("CheckButton", sName, fParent, "UICheckButtonTemplate")
+		chkbtn:SetWidth(20)
+		chkbtn:SetHeight(20)
+		chkbtn.tooltip = "Enable the creation of MetaMap Notes on the WorldMap.";
+		getglobal(chkbtn:GetName() .. 'Text'):SetText("   MetaMapNotes Support")
+
+		if tMetaMap.NotesPresence then
+			chkbtn:Enable()
+		else
+			chkbtn:Disable()
+		end
+		if chkbtn:IsEnabled() then
+			if tMetaMap.NotesEnable then
+				chkbtn:SetChecked(true)
+			else
+				chkbtn:SetChecked(false)
+			end
+		else
+			chkbtn:SetChecked(false)
+		end
+		return chkbtn
+	end
+	local function Render_SFMetamapBWPSupportCheckBox(fParent, sName, tMetaMap)
 		local chkbtn = CreateFrame("CheckButton", sName, fParent, "UICheckButtonTemplate")
 		chkbtn:SetWidth(20)
 		chkbtn:SetHeight(20)
 		chkbtn.tooltip = "Enable the appearance of MetaMapBWP arrow. Just an Arrow pointing where you need to go.";
 		getglobal(chkbtn:GetName() .. 'Text'):SetText("   MetaMapBWP Support")
-		if tMetaMapBWP.Support then
+
+		if tMetaMap.BWPPresence then
 			chkbtn:Enable()
-			--Dv(" BWP CB Enabled")
 		else
 			chkbtn:Disable()
-			--Dv(" BWP CB Disabled")
 		end
 		if chkbtn:IsEnabled() then
-			if tMetaMapBWP.Enable then
+			if tMetaMap.BWPEnable then
 				chkbtn:SetChecked(true)
-				--Dv(" BWP Support Enabled")
 			else
 				chkbtn:SetChecked(false)
-				--Dv(" BWP Support Enabled")
 			end
 		else
 			chkbtn:SetChecked(false)
@@ -282,8 +303,6 @@ function objSettingsFrame:new(fParent, tTexture, oSettings)
 		getglobal(sldr:GetName() .. 'Text'):SetText(sText); --Sets the "title" text (top-centre of slider).
 		getglobal(sldr:GetName() .. 'Low'):SetText(sLow); --Sets the left-side slider text (default is "Low").
 		getglobal(sldr:GetName() .. 'High'):SetText(sHigh); --Sets the right-side slider text (default is "High").
-		--getglobal(sldr:GetName() .. 'Low'):SetText(tostring(nMin)); --Sets the left-side slider text (default is "Low").
-		--getglobal(sldr:GetName() .. 'High'):SetText(tostring(nMax)); --Sets the right-side slider text (default is "High").
 		sldr:SetValueStep(1)
 		sldr:SetMinMaxValues(nMin, nMax)
 		sldr:SetValue(nValue)
@@ -297,8 +316,6 @@ function objSettingsFrame:new(fParent, tTexture, oSettings)
 		else
 			fs:SetText(tostring(nValue))
 		end
-		--fs:SetText(nValue.."%")
-		--if sValue then fs:SetText(sValue.."%") end
 		sldr.fs = fs
 		return sldr
 	end
@@ -312,40 +329,42 @@ function objSettingsFrame:new(fParent, tTexture, oSettings)
 		obj.tWidgets.frame_SettingFrame = Render_SF(fParent, "VG_SettingsFrame")
 		obj.tWidgets.button_CloseButton = Render_Button(obj.tWidgets.frame_SettingFrame, nil, 16, 16, tTexture.B_CLOSE)
 		obj.tWidgets.button_CloseButton:SetPoint("TOPRIGHT", obj.tWidgets.frame_SettingFrame, "TOPRIGHT", -5, -5)
-		obj.tWidgets.checkbutton_MetaMapBWPSupport = Render_SFMetamapBWPSupportCheckBox(obj.tWidgets.frame_SettingFrame, "VG_SettingsFrame_MetaMapBWPCheckButton", tMetaMapBWP)
-		obj.tWidgets.checkbutton_MetaMapBWPSupport:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 8, -5)
+		obj.tWidgets.checkbutton_MetaMapNotesSupport = Render_SFMetamapNotesSupportCheckBox(obj.tWidgets.frame_SettingFrame, "VG_SettingsFrame_MetaMapNotesCheckButton", tMetaMap)
+		obj.tWidgets.checkbutton_MetaMapNotesSupport:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 8, -5)
+		obj.tWidgets.checkbutton_MetaMapBWPSupport = Render_SFMetamapBWPSupportCheckBox(obj.tWidgets.frame_SettingFrame, "VG_SettingsFrame_MetaMapBWPCheckButton", tMetaMap)
+		obj.tWidgets.checkbutton_MetaMapBWPSupport:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 8, -20)
 		--tWidgets.checkbutton_Minimap = Render_SFMinimapCheckBox(tWidgets.frame_SettingFrame, "VG_SettingsFrame_MinimapCheckButton")
 		--tWidgets.slider_Minimap = Render_SFSlider(tWidgets.frame_SettingFrame, "VG_SettingFrame_MinimapSlider", "Minimap Button Placement", "-180", "+180", -180, 180, math.floor(nMinimapPos), nil)
 		--tWidgets.slider_Minimap:SetPoint("TOP", tWidgets.frame_SettingFrame, "TOP", 0, -40)
 
 		obj.tWidgets.colorpicker_StepFrameTextColor = Render_SFColorSwatch(obj.tWidgets.frame_SettingFrame, "VG_MainFrame_StepFrameLabel", tUI)
-		obj.tWidgets.colorpicker_StepFrameTextColor:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 10, -30)
+		obj.tWidgets.colorpicker_StepFrameTextColor:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 10, -45)
 		obj.tWidgets.fs_ColorPickerStepFrameTextColor = Render_SFColorSwatchLabel(obj.tWidgets.colorpicker_StepFrameTextColor, "StepFrame TextColor")
 		
 		obj.tWidgets.colorpicker_ScrollFrameTextColor = Render_SFColorSwatch(obj.tWidgets.frame_SettingFrame, "VG_MainFrame_ScrollFrameLabels", tUI)
-		obj.tWidgets.colorpicker_ScrollFrameTextColor:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 10, -48)
+		obj.tWidgets.colorpicker_ScrollFrameTextColor:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 10, -63)
 		obj.tWidgets.fs_ColorPickerScrollFrameTextColor = Render_SFColorSwatchLabel(obj.tWidgets.colorpicker_ScrollFrameTextColor, "ScrollFrame TextColor")
 		
 		obj.tWidgets.colorpicker_MainFrame = Render_SFColorSwatch(obj.tWidgets.frame_SettingFrame, "VG_MainFrame", tUI)
-		obj.tWidgets.colorpicker_MainFrame:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 10, -78)
+		obj.tWidgets.colorpicker_MainFrame:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 10, -93)
 		obj.tWidgets.fs_ColorPickerMainFrame = Render_SFColorSwatchLabel(obj.tWidgets.colorpicker_MainFrame, "MainFrame Background")
 
 		obj.tWidgets.colorpicker_StepFrame = Render_SFColorSwatch(obj.tWidgets.frame_SettingFrame, "VG_MainFrame_StepFrame", tUI)
-		obj.tWidgets.colorpicker_StepFrame:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 10, -95)
+		obj.tWidgets.colorpicker_StepFrame:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 10, -110)
 		obj.tWidgets.fs_ColorPickerStepFrame = Render_SFColorSwatchLabel(obj.tWidgets.colorpicker_StepFrame , "StepFrame Tint")
 
 		obj.tWidgets.colorpicker_ScrollFrame = Render_SFColorSwatch(obj.tWidgets.frame_SettingFrame, "VG_MainFrame_ScrollFrame", tUI)
-		obj.tWidgets.colorpicker_ScrollFrame:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 10, -112)
+		obj.tWidgets.colorpicker_ScrollFrame:SetPoint("TOPLEFT", obj.tWidgets.frame_SettingFrame, "TOPLEFT", 10, -127)
 		obj.tWidgets.fs_ColorPickerScrollFrame = Render_SFColorSwatchLabel(obj.tWidgets.colorpicker_ScrollFrame, "ScrollFrame Tint")
 
 		obj.tWidgets.slider_StepScroll = Render_SFSlider(obj.tWidgets.frame_SettingFrame, "VG_SettingsFrame_StepScrollSlider", "Value", "15%", "55%", 15, 55, math.floor(nStepScroll*100), "%")
-		obj.tWidgets.slider_StepScroll:SetPoint("TOP", obj.tWidgets.frame_SettingFrame, "TOP", 0, -145)
+		obj.tWidgets.slider_StepScroll:SetPoint("TOP", obj.tWidgets.frame_SettingFrame, "TOP", 0, -160)
 		obj.tWidgets.slider_Opacity = Render_SFSlider(obj.tWidgets.frame_SettingFrame, "VG_SettingsFrame_OpacitySlider", "Opacity", "15%", "100%", 15, 100, math.floor(nOpacity*100), "%")
-		obj.tWidgets.slider_Opacity:SetPoint("TOP", obj.tWidgets.frame_SettingFrame, "TOP", 0, -185)
+		obj.tWidgets.slider_Opacity:SetPoint("TOP", obj.tWidgets.frame_SettingFrame, "TOP", 0, -200)
 		obj.tWidgets.slider_Scale = Render_SFSlider(obj.tWidgets.frame_SettingFrame, "VG_SettingsFrame_ScaleSlider", "Scale", "25%", "175%", 25, 175, math.floor(nScale*100), "%")
-		obj.tWidgets.slider_Scale:SetPoint("TOP", obj.tWidgets.frame_SettingFrame, "TOP", 0, -225)
+		obj.tWidgets.slider_Scale:SetPoint("TOP", obj.tWidgets.frame_SettingFrame, "TOP", 0, -240)
 		obj.tWidgets.slider_Layer = Render_SFSlider(obj.tWidgets.frame_SettingFrame, "VG_SettingsFrame_LayerSlider", "Layer", "BG", "DIALOG", 1, 5, Layers[sLayer], sLayer)
-		obj.tWidgets.slider_Layer:SetPoint("TOP", obj.tWidgets.frame_SettingFrame, "TOP", 0, -265)
+		obj.tWidgets.slider_Layer:SetPoint("TOP", obj.tWidgets.frame_SettingFrame, "TOP", 0, -280)
 		obj.tWidgets.slider_Layer.fs:SetText(sLayer)
 	end
 
@@ -375,16 +394,28 @@ function objSettingsFrame:new(fParent, tTexture, oSettings)
 		frame:Hide()
 		frame.showthis = false
 	end)
+	obj.tWidgets.checkbutton_MetaMapNotesSupport:SetScript("OnClick", function()
+		if arg1 == "LeftButton" then
+			local bVal = this:GetChecked()
+			local tMetaMap = oSettings:GetSettingsMetaMap()
+			if not bVal then
+				tMetaMap.NotesEnable = false
+			else
+				tMetaMap.NotesEnable = true
+			end
+			oSettings:SetSettingsMetaMap(tMetaMap)
+		end
+	end)
 	obj.tWidgets.checkbutton_MetaMapBWPSupport:SetScript("OnClick", function()
 		if arg1 == "LeftButton" then
 			local bVal = this:GetChecked()
-			local tMetaMapBWP = oSettings:GetSettingsMetaMapBWP()
+			local tMetaMap = oSettings:GetSettingsMetaMap()
 			if not bVal then
-				tMetaMapBWP.Enable = false
+				tMetaMap.BWPEnable = false
 			else
-				tMetaMapBWP.Enable = true
+				tMetaMap.BWPEnable = true
 			end
-			oSettings:SetSettingsMetaMapBWP(tMetaMapBWP)
+			oSettings:SetSettingsMetaMap(tMetaMap)
 		end
 	end)
 	--[[obj.tWidgets.checkbutton_Minimap:SetScript("OnClick", function()

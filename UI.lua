@@ -3,7 +3,7 @@
 ------------------
 UI.lua
 Authors: mrmr
-Version: 1.04.1
+Version: 1.04.2
 ------------------------------------------------------
 Description: 
     	Master UI object.
@@ -17,6 +17,8 @@ Description:
     		1.99x for a beta release was a weird choise.
 	1.04.1
 		-- UI object rivisited!
+	1.04.2
+		-- no changes in here for this revision
 ------------------------------------------------------
 Connection:
 --]]--------------------------------------------------
