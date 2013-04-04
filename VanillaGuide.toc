@@ -8,7 +8,7 @@
 
 ## X-Credits: Joana/Mancow and Brian Kopps for the guides. myself for the Joana's guide and the addon itself. Kira and Cdlp for the Brian Kopps' guide. Velenran for Profession guides.
 ## X-Category: Quests
-## X-Date: 2013-03-29
+## X-Date: 2013-04-04
 ## X-ReleaseDate: 2012-xx-xx
 ## X-Email: rsheep@gmail.com
 ## X-Website: http://vanillaguide.googlecode.com
