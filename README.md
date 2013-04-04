@@ -13,8 +13,6 @@ Well, thank you Joana/Mancow, you ruined my life with WoW, but I love you anyway
 
 and here's the link to the REAL guide:
 
-http://www.joanasworld.com/azeroth.htm
-
-http://www.joanasworld.com/Joanas1-60Guide.pdf
-
-http://www.joanasworld.com/meet_joana_mancow.html
+    http://www.joanasworld.com/meet_joana_mancow.html
+    http://www.joanasworld.com/azeroth.htm
+    http://www.joanasworld.com/Joanas1-60Guide.pdf
