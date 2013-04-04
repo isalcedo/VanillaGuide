@@ -7,8 +7,8 @@ VanillaGuide aim to cover the hole for an in-game guide for Vanilla WoW. The Add
     MetaMapBWP Integration
 
 
-== Credits ==
-
+Credits
+=======
 Well, thank you Joana/Mancow, you ruined my life with WoW, but I love you anyway.
 
 and here's the link to the REAL guide:
