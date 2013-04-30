@@ -18,4 +18,14 @@ and here're the links to the REAL guide:
     http://www.joanasworld.com/Joanas1-60Guide.pdf
 
 
+Donation
+========
+If you would like to support this project, you may donate to our development fund via Paypal.
+
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LSR84M2ZJEPJS)
+
+Any funds donated will be used to help further development on this project, by purchasing equipment, etc.
+
+We are always looking for more volunteers to help with coding, customizations, etc, so feel free to contact us.
+
+Thank you.
