@@ -18,4 +18,4 @@ and here're the links to the REAL guide:
     http://www.joanasworld.com/Joanas1-60Guide.pdf
 
 
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LSR84M2ZJEPJS)]
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LSR84M2ZJEPJS)
