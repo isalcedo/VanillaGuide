@@ -769,7 +769,8 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 		-- 2 = BWP Enabled
 		-- 3 = Notes & BWP Enabled
 		local mode
-		if tMetaMap.Presence then 
+		if tMetaMap.Presence then
+			local mode
 			if (tMetaMap.NotesPresence and tMetaMap.NotesEnable) and 
 					not (tMetaMap.BWPPresence and tMetaMap.BWPEnable) then
 				mode = 1
@@ -782,13 +783,13 @@ function objMainFrame:new(fParent, tTexture, oSettings, oDisplay)
 			else 
 				mode = nil
 			end
-		end
 		
-		local title = oDisplay:GetGuideTitle() 
-		local step = oDisplay:GetCurrentStep()
-		local label = oDisplay:GetStepLabel()
-		local t = oDisplay:GetCurrentStepInfo()
-		obj:SetMetaMapDestination(t.x, t.y, t.zone, title, step, label, mode)
+			local title = oDisplay:GetGuideTitle() 
+			local step = oDisplay:GetCurrentStep()
+			local label = oDisplay:GetStepLabel()
+			local t = oDisplay:GetCurrentStepInfo()
+			obj:SetMetaMapDestination(t.x, t.y, t.zone, title, step, label, mode)
+		end
 	end
 
 	obj.RefreshData = function(self)
