@@ -277,7 +277,7 @@ Table_003_Horde_20to30 = {
 			[18] = { str = "17) #DOQUEST\"Arikara\"# (done up at 37.35) ", x = 37, y = 35, zone = "Thousand Needles" },
 			[19] = { str = "18) #DOQUEST\"Wanted - Arnak Grimtotem\"# (he is up at 38.27)", x = 38, y = 27, zone = "Thousand Needles" },
 			[20] = { str = "19) #DOQUEST\"Free at Last\"# (escort quest starts up at 38.27)", x = 38, y = 27, zone = "Thousand Needles" },
-			[21] = { str = "20) Go to Whitereach Post (21.32), turn in #TURNIN\"Arikara\"# and #TURNIN\"Homeward Bound\"#, x = 21, y = 32, zone = "Thousand Needles" },
+			[21] = { str = "20) Go to Whitereach Post (21.32), turn in #TURNIN\"Arikara\"# and #TURNIN\"Homeward Bound\"#", x = 21, y = 32, zone = "Thousand Needles" },
 			[22] = { str = "21) You should be level 29 by now, if not grind to level 29, I grind away at centuars around Camp E'Thok (18.23)", x = 18, y = 23, zone = "Thousand Needles" },
 			[23] = { str = "22) Then do #DOQUEST\"Hypercapacitor Gizmo\"# (Elite) (kill mobs around the cage, at 22.24, free him, #HUNTERuse immolation trap/fear# to kill it)  ", x = 22, y = 24, zone = "Thousand Needles" },
 			[24] = { str = "23) Kill the #NPCGalak Messenger#, he drops 'Assassination Note' which starts #ACCEPT\"Assassination Plot\"# Turn in for Easy XP.  Also turn in #TURNIN\"Hypercapacitor Gizmo\"#" },
